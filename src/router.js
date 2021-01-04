@@ -7,6 +7,6 @@ router.get("/", controller.renderHomePAge)
 
 router.post("/", controller.getWeather)
 
-router.get("/about", controller.renderHomePAge)
+router.get("/about", controller.renderAboutPAge)
 
 module.exports = router;

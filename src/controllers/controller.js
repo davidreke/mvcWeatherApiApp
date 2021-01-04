@@ -7,7 +7,7 @@ exports.renderHomePAge = (req, res) => {
     res.render("index")
 }
 
-exports.getWeather = (req, res) => {
+exports.getWeather = (req, res, ) => {
     const city = req.body.city
 
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=imperial`
@@ -15,19 +15,22 @@ exports.getWeather = (req, res) => {
     const weather = new Weather(city)
 
     weather.validateUserInput()
-
+    console.log(weather.errors)
     if(weather.errors.length){
         res.render("index", {error: weather.errors.toString()})
     } else {
         axios.get(url)
         .then((response)=>{
-            const {temp} = response.data.main
-            const {city} = response.data.city
+            console.log(response.data)
+            const temp = response.data.main.temp
+            const city = response.data.name
+            console.log(temp, city)
             res.render("index", {
                 weather: `It is currently ${temp} °F in ${city}.`
             })
         })
         .catch((err) =>{
+            console.log(err)
              res.render("index", {
                 weather: `That city is not avaible`
             })
